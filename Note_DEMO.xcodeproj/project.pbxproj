@@ -15,6 +15,7 @@
 		2C442FD91DDE2DCA00AEF880 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C442FD81DDE2DCA00AEF880 /* ListViewController.swift */; };
 		2C442FDD1DDE311000AEF880 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C442FDC1DDE311000AEF880 /* Note.swift */; };
 		2C442FEB1DDF0AAC00AEF880 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C442FEA1DDF0AAC00AEF880 /* NoteViewController.swift */; };
+		2CE7CD591DE2F0AD00E022C6 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE7CD581DE2F0AD00E022C6 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		2C442FD81DDE2DCA00AEF880 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		2C442FDC1DDE311000AEF880 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		2C442FEA1DDF0AAC00AEF880 /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		2CE7CD581DE2F0AD00E022C6 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				2C442FD81DDE2DCA00AEF880 /* ListViewController.swift */,
 				2C442FEA1DDF0AAC00AEF880 /* NoteViewController.swift */,
 				2C442FDC1DDE311000AEF880 /* Note.swift */,
+				2CE7CD581DE2F0AD00E022C6 /* CoreDataManager.swift */,
 				2C442FC71DDE2A4500AEF880 /* Main.storyboard */,
 				2C442FCD1DDE2A4500AEF880 /* Assets.xcassets */,
 				2C442FCF1DDE2A4500AEF880 /* LaunchScreen.storyboard */,
@@ -148,6 +151,7 @@
 				2C442FC41DDE2A4500AEF880 /* AppDelegate.swift in Sources */,
 				2C442FD91DDE2DCA00AEF880 /* ListViewController.swift in Sources */,
 				2C442FCC1DDE2A4500AEF880 /* Note_DEMO.xcdatamodeld in Sources */,
+				2CE7CD591DE2F0AD00E022C6 /* CoreDataManager.swift in Sources */,
 				2C442FEB1DDF0AAC00AEF880 /* NoteViewController.swift in Sources */,
 				2C442FDD1DDE311000AEF880 /* Note.swift in Sources */,
 			);
@@ -309,6 +313,7 @@
 				2C442FD71DDE2A4500AEF880 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

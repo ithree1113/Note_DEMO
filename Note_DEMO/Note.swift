@@ -7,15 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
-class Note: NSObject {
-    var text: String?
-    var imageName: String?
+class Note: NSManagedObject {
+    @NSManaged var text: String?
+    @NSManaged var imageName: String?
+    @NSManaged var index: Int16
     
-    
-    
+    // Get the image by imageName from Document directory
     func image() -> UIImage? {
-        
         if let dataName = self.imageName {
             let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
             let imageURL = documentURL?.appendingPathComponent("\(dataName)", isDirectory: false)

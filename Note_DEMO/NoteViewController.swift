@@ -39,16 +39,18 @@ class NoteViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBAction func done(_ sender: UIBarButtonItem) {
         self.note?.text = self.textView.text
         
+        // Save the image if user picked the new image.
         if self.isNewImage {
             let uuid = NSUUID()
             let imageName = "\(uuid.uuidString).jpg"
             
             let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
             let imageURL = documentURL?.appendingPathComponent(imageName, isDirectory: false)
-            print("\(imageURL)")
             let imageData = UIImageJPEGRepresentation(self.imageView.image!, 1)
+            
             do {
                 try imageData?.write(to: imageURL!)
+                // Delete the old image
                 if let oldImageName = self.note?.imageName {
                     let oldImageURL = documentURL?.appendingPathComponent(oldImageName, isDirectory: false)
                     try FileManager.default.removeItem(at: oldImageURL!)

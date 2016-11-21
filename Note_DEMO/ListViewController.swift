@@ -12,18 +12,17 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var tableView: UITableView!
     
-//    let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+    let myContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let noteEntity = "Note"
     var notes: [Note] = []
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        for index in 0...2 {
-            let note = Note()
-            note.text = "Note \(index)"
-            notes.append(note)
-        }
+        let coredataManager = CoreDataManager(context: myContext)
+        // Sort: New->Old
+        self.notes = coredataManager.load(self.noteEntity, byPredicate: nil, bySort: ["index": false], byLimit: nil) as! [Note]
+
     }
     
     override func viewDidLoad() {
@@ -40,36 +39,51 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
     
+    //Set editing mode for sliding delete
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.tableView.setEditing(editing, animated: true)
     }
     
     @IBAction func addNote(_ sender: UIBarButtonItem) {
-        let note = Note()
-        note.text = "New Note"
         
+        // An auto increasing counter to sort
+        let userDefault = UserDefaults.standard
+        var nowIndex = 1
+        if let savedIndex = userDefault.object(forKey: "idIndex") as? Int {
+            nowIndex = savedIndex + 1
+        }
+        
+        let coredataManager = CoreDataManager(context: self.myContext)
+        let note = coredataManager.insert(self.noteEntity, attributeInfo: ["text": "New Note", "index": "\(nowIndex)"]) as! Note
         self.notes.insert(note, at: 0)
+
         let indexPath = IndexPath(row: 0, section: 0)
-        
         self.tableView.insertRows(at: [indexPath], with: .automatic)
+        
+        userDefault.set(nowIndex, forKey: "idIndex")
     }
     
     //MARK:- UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("\(notes.count)")
         return notes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell", for: indexPath)
         
-        cell.textLabel?.text = notes[indexPath.row].text
+        let note = notes[indexPath.row]
+        
+        cell.textLabel?.text = note.text
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            let coredataManager = CoreDataManager(context: self.myContext)
+            coredataManager.delete(selectedData: self.notes[indexPath.row])
             self.notes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -99,6 +113,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK:- NoteViewControllerDelegate
     func didFinishUpdate(note: Note) {
         if let index = self.notes.index(of: note) {
+            let coredataManager = CoreDataManager(context: self.myContext)
+            coredataManager.save()
             let indexPath = IndexPath(row: index, section: 0)
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
             
