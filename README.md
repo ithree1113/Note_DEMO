@@ -8,4 +8,4 @@ A simple note app by swift 3.0 for practice. And the data is saved by CoreData.
 </div>
 
 ## License
-GooglePlaceApiAutocomplete_DEMO is available under the MIT license. See the [LICENSE](https://raw.githubusercontent.com/ithree1113/Note_DEMO/master/LICENSE) file for more info.
+Note_DEMO is available under the MIT license. See the [LICENSE](https://raw.githubusercontent.com/ithree1113/Note_DEMO/master/LICENSE) file for more info.
