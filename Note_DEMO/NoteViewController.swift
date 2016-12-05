@@ -44,16 +44,16 @@ class NoteViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let uuid = NSUUID()
             let imageName = "\(uuid.uuidString).jpg"
             
-            let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-            let imageURL = documentURL?.appendingPathComponent(imageName, isDirectory: false)
+            let myURL = MyNoteURL()
+            let imageURL = myURL.getMyURL(.myPhotoURL)!.appendingPathComponent("\(imageName)")
             let imageData = UIImageJPEGRepresentation(self.imageView.image!, 1)
             
             do {
-                try imageData?.write(to: imageURL!)
+                try imageData?.write(to: imageURL)
                 // Delete the old image
                 if let oldImageName = self.note?.imageName {
-                    let oldImageURL = documentURL?.appendingPathComponent(oldImageName, isDirectory: false)
-                    try FileManager.default.removeItem(at: oldImageURL!)
+                    let oldImageURL = myURL.getMyURL(.myPhotoURL)!.appendingPathComponent("\(oldImageName)")
+                    try FileManager.default.removeItem(at: oldImageURL)
                 }
                 self.note?.imageName = imageName
             } catch  {
@@ -75,9 +75,10 @@ class NoteViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 
     //MARK:- UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
         self.imageView.image = image
         self.isNewImage = true
+        }
         self.dismiss(animated: true, completion: nil)
     }
     

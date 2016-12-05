@@ -31,7 +31,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Do any additional setup after loading the view.
         tableView.dataSource = self
         tableView.delegate = self
-        print("\(NSHomeDirectory())")
+        
+        print("\(MyNoteURL().myHomePath)")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,7 +68,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK:- UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("\(notes.count)")
         return notes.count
     }
     

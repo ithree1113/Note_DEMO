@@ -17,11 +17,11 @@ class Note: NSManagedObject {
     // Get the image by imageName from Document directory
     func image() -> UIImage? {
         if let dataName = self.imageName {
-            let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-            let imageURL = documentURL?.appendingPathComponent("\(dataName)", isDirectory: false)
+            
+            let imageURL = MyNoteURL().getMyURL(.myPhotoURL)!.appendingPathComponent("\(dataName)")
             
             do {
-                let imageData = try Data.init(contentsOf: imageURL!)
+                let imageData = try Data.init(contentsOf: imageURL)
                 return UIImage(data: imageData)
             } catch  {
                 print(error)
