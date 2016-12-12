@@ -42,7 +42,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Mgt-nc-jVH" kind="show" identifier="noteSegue" id="han-7H-GgI"/>
+                                            <segue destination="Mgt-nc-jVH" kind="show" identifier="listToNote" id="han-7H-GgI"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
