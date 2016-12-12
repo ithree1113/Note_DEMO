@@ -18,7 +18,7 @@ class Note: NSManagedObject {
     func image() -> UIImage? {
         if let dataName = self.imageName {
             
-            let imageURL = MyNoteURL().getMyURL(.myPhotoURL)!.appendingPathComponent("\(dataName)")
+            let imageURL = MyNoteDirectory().getMyURL(.myPhoto).appendingPathComponent("\(dataName)")
             
             do {
                 let imageData = try Data.init(contentsOf: imageURL)

@@ -44,15 +44,15 @@ class NoteViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let uuid = NSUUID()
             let imageName = "\(uuid.uuidString).jpg"
             
-            let myURL = MyNoteURL()
-            let imageURL = myURL.getMyURL(.myPhotoURL)!.appendingPathComponent("\(imageName)")
+            let myDirectory = MyNoteDirectory()
+            let imageURL = myDirectory.getMyURL(.myPhoto).appendingPathComponent("\(imageName)")
             let imageData = UIImageJPEGRepresentation(self.imageView.image!, 1)
             
             do {
                 try imageData?.write(to: imageURL)
                 // Delete the old image
                 if let oldImageName = self.note?.imageName {
-                    let oldImageURL = myURL.getMyURL(.myPhotoURL)!.appendingPathComponent("\(oldImageName)")
+                    let oldImageURL = myDirectory.getMyURL(.myPhoto).appendingPathComponent("\(oldImageName)")
                     try FileManager.default.removeItem(at: oldImageURL)
                 }
                 self.note?.imageName = imageName
