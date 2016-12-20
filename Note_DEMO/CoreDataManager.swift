@@ -7,13 +7,17 @@
 //
 
 import Foundation
+import UIKit
 import CoreData
 
 class CoreDataManager {
-    var theContext: NSManagedObjectContext
     
-    init(context: NSManagedObjectContext) {
-        self.theContext = context
+    static var sharedInstance = CoreDataManager()
+    
+    private var theContext: NSManagedObjectContext
+    
+    private init() {
+        self.theContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
     
     // Save the change of CoreData

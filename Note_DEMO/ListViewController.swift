@@ -12,14 +12,14 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var tableView: UITableView!
     
-    let myContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//    let myContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let noteEntity = Contants.CoredataEntity.Note.Note
     var notes: [Note] = []
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        let coredataManager = CoreDataManager(context: myContext)
+        let coredataManager = CoreDataManager.sharedInstance
         // Sort: New->Old
         self.notes = coredataManager.load(self.noteEntity, byPredicate: nil, bySort: [Contants.CoredataEntity.Note.index: false], byLimit: nil) as! [Note]
 
@@ -56,7 +56,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             nowIndex = savedIndex + 1
         }
         
-        let coredataManager = CoreDataManager(context: self.myContext)
+        let coredataManager = CoreDataManager.sharedInstance
         let note = coredataManager.insert(self.noteEntity, attributeInfo: [Contants.CoredataEntity.Note.text: "New Note", Contants.CoredataEntity.Note.index: "\(nowIndex)"]) as! Note
         self.notes.insert(note, at: 0)
 
@@ -83,7 +83,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let coredataManager = CoreDataManager(context: self.myContext)
+            let coredataManager = CoreDataManager.sharedInstance
             coredataManager.delete(selectedData: self.notes[indexPath.row])
             self.notes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -114,7 +114,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK:- NoteViewControllerDelegate
     func didFinishUpdate(note: Note) {
         if let index = self.notes.index(of: note) {
-            let coredataManager = CoreDataManager(context: self.myContext)
+            let coredataManager = CoreDataManager.sharedInstance
             coredataManager.save()
             let indexPath = IndexPath(row: index, section: 0)
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
