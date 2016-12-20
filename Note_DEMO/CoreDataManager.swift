@@ -60,15 +60,15 @@ class CoreDataManager {
     }
     
     // Load data from CoreData
-    func load(_ theEntityName: String, byPredicate: String?, bySort: [String: Bool]?, byLimit: Int?) -> [NSManagedObject]? {
+    func load(_ theEntityName: String, withPredicate: String?, withSort: [String: Bool]?, withLimit: Int?) -> [NSManagedObject]? {
 
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: theEntityName)
         
-        if let predicate = byPredicate {
+        if let predicate = withPredicate {
             request.predicate = NSPredicate(format: predicate)
         }
         
-        if let sort = bySort {
+        if let sort = withSort {
             var sortArr: [NSSortDescriptor] = []
             for (key, value) in sort {
                 sortArr.append(NSSortDescriptor(key: key, ascending: value))
@@ -76,7 +76,7 @@ class CoreDataManager {
             request.sortDescriptors = sortArr
         }
         
-        if let limitNum = byLimit {
+        if let limitNum = withLimit {
             request.fetchLimit = limitNum
         }
         
@@ -88,8 +88,8 @@ class CoreDataManager {
     }
     
     // Delete data in CoreData by Predicate
-    func delete(_ theEntityName: String, byPredicate: String?) {
-        if let results = self.load(theEntityName, byPredicate: byPredicate, bySort: nil, byLimit: nil) {
+    func delete(_ theEntityName: String, withPredicate: String?) {
+        if let results = self.load(theEntityName, withPredicate: withPredicate, withSort: nil, withLimit: nil) {
             
             for result in results {
                 self.theContext.delete(result)
@@ -105,9 +105,9 @@ class CoreDataManager {
     }
     
     // Update data in CoreData
-    func update(_ theEntityName: String, byPredicate: String?, attributeInfo: [String: String]) {
+    func update(_ theEntityName: String, withPredicate: String?, attributeInfo: [String: String]) {
         
-        if let results = self.load(theEntityName, byPredicate: byPredicate, bySort: nil, byLimit: nil) {
+        if let results = self.load(theEntityName, withPredicate: withPredicate, withSort: nil, withLimit: nil) {
             for result in results {
                 for(key, value) in attributeInfo {
                     let type = result.entity.attributesByName[key]?.attributeType

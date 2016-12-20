@@ -21,7 +21,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let coredataManager = CoreDataManager.sharedInstance
         // Sort: New->Old
-        self.notes = coredataManager.load(self.noteEntity, byPredicate: nil, bySort: [Contants.CoredataEntity.Note.index: false], byLimit: nil) as! [Note]
+        self.notes = coredataManager.load(self.noteEntity, withPredicate: nil, withSort: [Contants.CoredataEntity.Note.index: false], withLimit: nil) as! [Note]
 
     }
     
