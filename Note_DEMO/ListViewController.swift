@@ -13,7 +13,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var tableView: UITableView!
     
 //    let myContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let noteEntity = Contants.CoredataEntity.Note.Note
+    let noteEntity = Constants.CoredataEntity.Note.Note
     var notes: [Note] = []
     
     required init?(coder aDecoder: NSCoder) {
@@ -21,7 +21,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let coredataManager = CoreDataManager.sharedInstance
         // Sort: New->Old
-        self.notes = coredataManager.load(self.noteEntity, withPredicate: nil, withSort: [Contants.CoredataEntity.Note.index: false], withLimit: nil) as! [Note]
+        self.notes = coredataManager.load(self.noteEntity, withPredicate: nil, withSort: [Constants.CoredataEntity.Note.index: false], withLimit: nil) as! [Note]
 
     }
     
@@ -52,18 +52,18 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // An auto increasing counter to sort
         let userDefault = UserDefaults.standard
         var nowIndex = 1
-        if let savedIndex = userDefault.object(forKey: Contants.NSDefaultKeys.noteIndex) as? Int {
+        if let savedIndex = userDefault.object(forKey: Constants.NSDefaultKeys.noteIndex) as? Int {
             nowIndex = savedIndex + 1
         }
         
         let coredataManager = CoreDataManager.sharedInstance
-        let note = coredataManager.insert(self.noteEntity, attributeInfo: [Contants.CoredataEntity.Note.text: "New Note", Contants.CoredataEntity.Note.index: "\(nowIndex)"]) as! Note
+        let note = coredataManager.insert(self.noteEntity, attributeInfo: [Constants.CoredataEntity.Note.text: "New Note", Constants.CoredataEntity.Note.index: "\(nowIndex)"]) as! Note
         self.notes.insert(note, at: 0)
 
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.insertRows(at: [indexPath], with: .automatic)
         
-        userDefault.set(nowIndex, forKey: Contants.NSDefaultKeys.noteIndex)
+        userDefault.set(nowIndex, forKey: Constants.NSDefaultKeys.noteIndex)
     }
     
     //MARK:- UITableViewDataSource
@@ -72,7 +72,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Contants.CellIdentifiers.noteCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellIdentifiers.noteCell, for: indexPath)
         
         let note = notes[indexPath.row]
         
@@ -102,7 +102,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if (segue.identifier == Contants.Segues.listToNote) {
+        if (segue.identifier == Constants.Segues.listToNote) {
             let noteViewController = segue.destination as! NoteViewController
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 noteViewController.note = notes[indexPath.row]

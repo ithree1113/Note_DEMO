@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Contants {
+struct Constants {
     
     struct Segues {
        static let listToNote = "listToNote"
