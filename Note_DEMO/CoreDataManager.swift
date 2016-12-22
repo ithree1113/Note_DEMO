@@ -20,7 +20,10 @@ class CoreDataManager {
         self.theContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
     
-    // Save the change of CoreData
+    /**
+     This a method that saves data after a modification.
+     
+     */
     func save() {
         do {
             try self.theContext.save()
@@ -29,7 +32,13 @@ class CoreDataManager {
         }
     }
     
-    //Insert a new data into CoreData
+    /**
+     This a method that inserts data form a specific entity.
+     
+     - Parameter theEntityName: A specific entity name.
+     - Parameter attributeInfo: A dictionary to insert, such as [attribute name: value].
+     - Returns: The NSManagedObject just inserting.
+     */
     func insert(_ theEntityName: String, attributeInfo: [String: String]?) -> NSManagedObject {
         
         let insertData = NSEntityDescription.insertNewObject(forEntityName: theEntityName, into: self.theContext)
@@ -59,7 +68,15 @@ class CoreDataManager {
         return insertData
     }
     
-    // Load data from CoreData
+    /**
+     This a method that loads data form a specific entity with some condictions.
+     
+     - Parameter theEntityName: A specific entity name.
+     - Parameter withPredicate: The specfic condiction of some attributes.
+     - Parameter withSort: A dictionary to sort, such as [attribute name: ascending].
+     - Parameter withLimit: The limit of searching results.
+     - Returns: A array of searching results.
+     */
     func load(_ theEntityName: String, withPredicate: String?, withSort: [String: Bool]?, withLimit: Int?) -> [NSManagedObject]? {
 
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: theEntityName)
@@ -87,7 +104,12 @@ class CoreDataManager {
         }
     }
     
-    // Delete data in CoreData by Predicate
+    /**
+     This a method that deletes data form a specific entity with a predication.
+     
+     - Parameter theEntityName: A specific entity name.
+     - Parameter withPredicate: The specfic condiction of some attributes.
+     */
     func delete(_ theEntityName: String, withPredicate: String?) {
         if let results = self.load(theEntityName, withPredicate: withPredicate, withSort: nil, withLimit: nil) {
             
@@ -98,13 +120,23 @@ class CoreDataManager {
         }
     }
     
-    // Delete data in CoreData by NSManagedObject
+    /**
+     This a method that deletes data directly.
+     
+     - Parameter selectedData: The data that needed to be deleted.
+     */
     func delete(selectedData: NSManagedObject) {
         self.theContext.delete(selectedData)
         self.save()
     }
-    
-    // Update data in CoreData
+
+    /**
+     This a method that updates data form a specific entity with some condictions.
+     
+     - Parameter theEntityName: A specific entity name.
+     - Parameter withPredicate: The specfic condiction of some attributes.
+     - Parameter attributeInfo: A dictionary to update, such as [attribute name: new value].
+     */
     func update(_ theEntityName: String, withPredicate: String?, attributeInfo: [String: String]) {
         
         if let results = self.load(theEntityName, withPredicate: withPredicate, withSort: nil, withLimit: nil) {
